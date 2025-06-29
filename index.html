@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xconsult - Grow Your Brand Without Ads</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #00d4ff;
+            --primary-red: #ef4444;
+            --dark-bg: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --border-color: #27272a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .glass-effect {
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glow-blue {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .glow-red {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-blue);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            background: transparent;
+        }
+
+        .cursor-light {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .cursor.active {
+            transform: translate(-50%, -50%) scale(1.5);
+            border-color: var(--primary-red);
+            box-shadow: 0 0 25px var(--primary-red);
+        }
+
+        .cursor-light.active {
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%);
+            width: 400px;
+            height: 400px;
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .animate-pulse-slow {
+            animation: pulse-slow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-slow {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 30px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), #0099cc);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0099cc, var(--primary-blue));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--primary-red), #dc2626);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #dc2626, var(--primary-red));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        .section-padding {
+            padding: 60px 0;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-blur {
+            background: rgba(15, 15, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-card {
+            background: linear-gradient(145deg, #1a1a1a, #1f1f1f);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--primary-blue);
+            position: relative;
+        }
+
+        .pricing-card.featured::before {
+            content: "MOST POPULAR";
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--primary-blue);
+            color: black;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .feature-icon {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-icon:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--primary-blue);
+            transform: scale(1.1);
+        }
+
+        .stats-number {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .testimonial-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-gradient {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(239, 68, 68, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .section-padding {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 nav-blur">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span class="text-2xl font-bold gradient-text">X<span class="text-red-400">consult</span></span>
+                    </div>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="#home"
+                            class="text-gray-300 hover:text-cyan-400 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                        <a href="#services"
+                            class="text-gray-300 hover:text-cyan-400 px-3 py-2 text-sm font-medium transition-colors">Services</a>
+                        <a href="#pricing"
+                            class="text-gray-300 hover:text-cyan-400 px-3 py-2 text-sm font-medium transition-colors">Pricing</a>
+                        <a href="#results"
+                            class="text-gray-300 hover:text-cyan-400 px-3 py-2 text-sm font-medium transition-colors">Results</a>
+                        <a href="#contact" class="btn-primary text-white px-6 py-2 rounded-full text-sm font-medium">Get
+                            Started</a>
+                    </div>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-black/95 backdrop-blur-md">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400">Home</a>
+                <a href="#services"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400">Services</a>
+                <a href="#pricing"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400">Pricing</a>
+                <a href="#results"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400">Results</a>
+                <a href="#contact"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative section-padding pt-24">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-red-500/10 rounded-full blur-3xl animate-float"
+                style="animation-delay: -3s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="fade-in">
+                <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+                    Grow Your Brand<br>
+                    <span class="gradient-text text-glow">Without Ads</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto">
+                    We transform businesses into viral sensations through strategic content creation.
+                    No paid ads, just authentic growth that converts.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
+                    <a href="#contact"
+                        class="btn-primary text-white font-semibold py-4 px-8 rounded-full text-lg inline-flex items-center space-x-3">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Start Growing Today</span>
+                    </a>
+                    <div class="flex items-center space-x-3 text-gray-400">
+                        <i class="fas fa-phone text-cyan-400"></i>
+                        <span class="font-medium">+91 6281256601</span>
+                    </div>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold stats-number">3,400%</div>
+                        <div class="text-sm text-gray-500">Avg. Reach Increase</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold stats-number">2,700%</div>
+                        <div class="text-sm text-gray-500">Follower Growth</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold stats-number">324%</div>
+                        <div class="text-sm text-gray-500">Engagement Rate</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold stats-number">50+</div>
+                        <div class="text-sm text-gray-500">Success Stories</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#services" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section-padding relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">What We Do</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    We specialize in creating viral content that turns your brand into a magnetic force in your
+                    industry.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Cards -->
+                <div class="fade-in glass-effect p-8 rounded-2xl card-hover">
+                    <div class="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-video text-2xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Viral Video Creation</h3>
+                    <p class="text-gray-400">
+                        Professional video editing that transforms your content into scroll-stopping, share-worthy
+                        masterpieces.
+                    </p>
+                </div>
+
+                <div class="fade-in glass-effect p-8 rounded-2xl card-hover">
+                    <div class="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-2xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Content Strategy</h3>
+                    <p class="text-gray-400">
+                        Data-driven strategies that position your brand for maximum organic reach and engagement.
+                    </p>
+                </div>
+
+                <div class="fade-in glass-effect p-8 rounded-2xl card-hover">
+                    <div class="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-camera text-2xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Professional Shoots</h3>
+                    <p class="text-gray-400">
+                        On-location shoots that capture your brand's essence with cinematic quality and creative
+                        direction.
+                    </p>
+                </div>
+
+                <div class="fade-in glass-effect p-8 rounded-2xl card-hover">
+                    <div class="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-2xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Brand Identity</h3>
+                    <p class="text-gray-400">
+                        Cohesive visual identity development that makes your brand instantly recognizable and memorable.
+                    </p>
+                </div>
+
+                <div class="fade-in glass-effect p-8 rounded-2xl card-hover">
+                    <div class="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-mobile-alt text-2xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Reels Mastery</h3>
+                    <p class="text-gray-400">
+                        Platform-specific content optimization that leverages algorithm patterns for maximum visibility.
+                    </p>
+                </div>
+
+                <div class="fade-in glass-effect p-8 rounded-2xl card-hover">
+                    <div class="feature-icon w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-bar text-2xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Growth Analytics</h3>
+                    <p class="text-gray-400">
+                        Real-time performance tracking with actionable insights to continuously optimize your growth.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section-padding relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Choose Your Growth Plan</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Transparent pricing with no hidden fees. Scale your investment as your brand grows.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Starter Plan -->
+                <div class="fade-in pricing-card p-8 rounded-2xl">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-2">Starter Buzz</h3>
+                        <div class="text-4xl font-bold text-cyan-400 mb-2">₹9,999</div>
+                        <div class="text-gray-400">/month</div>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>5 Professional Reels</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Basic Content Strategy</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Caption Writing</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Monthly Analytics</span>
+                        </li>
+                    </ul>
+
+                    <a href="#contact"
+                        class="w-full btn-secondary text-white font-semibold py-3 px-6 rounded-full text-center block">
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Popular Plan -->
+                <div class="fade-in pricing-card featured p-8 rounded-2xl transform scale-105">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-2">Brand Builder</h3>
+                        <div class="text-4xl font-bold text-cyan-400 mb-2">₹19,999</div>
+                        <div class="text-gray-400">/month</div>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>10 Premium Reels</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Advanced Strategy</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Brand Identity Design</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Dedicated Manager</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Priority Support</span>
+                        </li>
+                    </ul>
+
+                    <a href="#contact"
+                        class="w-full btn-primary text-white font-semibold py-3 px-6 rounded-full text-center block glow-blue">
+                        Most Popular
+                    </a>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="fade-in pricing-card p-8 rounded-2xl">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-2">Viral Pro Max</h3>
+                        <div class="text-4xl font-bold text-cyan-400 mb-2">₹39,999</div>
+                        <div class="text-gray-400">/month</div>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>20 Premium Reels</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Monthly On-location Shoot</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Viral Content Research</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>Advanced Analytics</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-check text-cyan-400"></i>
+                            <span>24/7 Priority Support</span>
+                        </li>
+                    </ul>
+
+                    <a href="#contact"
+                        class="w-full btn-secondary text-white font-semibold py-3 px-6 rounded-full text-center block">
+                        Go Viral
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="section-padding relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Real Results, Real Growth</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    See how we've transformed businesses across industries with organic content strategies.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <!-- Case Study 1 -->
+                <div class="fade-in testimonial-card p-8 rounded-2xl">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-cyan-500/20 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-dumbbell text-cyan-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Fitness Studio</h3>
+                            <p class="text-gray-400">3 Month Transformation</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="text-center p-4 bg-red-500/10 rounded-lg">
+                            <div class="text-sm text-gray-400 mb-1">Before</div>
+                            <div class="text-2xl font-bold text-red-400">1,200</div>
+                            <div class="text-xs text-gray-500">followers</div>
+                        </div>
+                        <div class="text-center p-4 bg-cyan-500/10 rounded-lg">
+                            <div class="text-sm text-gray-400 mb-1">After</div>
+                            <div class="text-2xl font-bold text-cyan-400">28,500</div>
+                            <div class="text-xs text-gray-500">followers</div>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-300 mb-4">
+                        "Our membership signups increased by 450% after implementing Xconsult's content strategy. The
+                        viral workout reels brought in clients from across the city."
+                    </p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-1">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-400 ml-2">5.0 (87 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 2 -->
+                <div class="fade-in testimonial-card p-8 rounded-2xl">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-cyan-500/20 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-utensils text-cyan-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Restaurant Chain</h3>
+                            <p class="text-gray-400">6 Month Partnership</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="text-center p-4 bg-red-500/10 rounded-lg">
+                            <div class="text-sm text-gray-400 mb-1">Before</div>
+                            <div class="text-2xl font-bold text-red-400">500</div>
+                            <div class="text-xs text-gray-500">followers</div>
+                        </div>
+                        <div class="text-center p-4 bg-cyan-500/10 rounded-lg">
+                            <div class="text-sm text-gray-400 mb-1">After</div>
+                            <div class="text-2xl font-bold text-cyan-400">42,000</div>
+                            <div class="text-xs text-gray-500">followers</div>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-300 mb-4">
+                        "Our weekend reservations are now booked out 3 weeks in advance thanks to Xconsult's viral food
+                        reels. We've stopped all paid ads and our ROI is 10x better."
+                    </p>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-1">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-400 ml-2">5.0 (124 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="section-padding relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="cta-gradient p-12 rounded-3xl fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Ready to Go Viral?
+                </h2>
+                <p class="text-xl text-gray-300 mb-6 max-w-2xl mx-auto">
+                    Join 50+ successful brands who've transformed their growth with our proven content strategies.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <a href="https://wa.link/tbnqwd"
+                        class="btn-primary text-white font-semibold py-4 px-8 rounded-full text-lg inline-flex items-center space-x-3">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                        <span>Start on WhatsApp</span>
+                    </a>
+                    <a href="tel:+916281256601"
+                        class="btn-secondary text-white font-semibold py-4 px-8 rounded-full text-lg inline-flex items-center space-x-3">
+                        <i class="fas fa-phone text-xl"></i>
+                        <span>Call Now</span>
+                    </a>
+                </div>
+
+                <div class="mt-8 text-gray-400">
+                    <i class="fas fa-shield-alt text-cyan-400 mr-2"></i>
+                    6-month money-back guarantee if we don't deliver results
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black/50 border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="text-2xl font-bold gradient-text mb-4">Xconsult</div>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Your partner in organic brand growth through powerful content strategies that convert audiences
+                        into customers.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-cyan-500 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-cyan-500 transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-cyan-500 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Video Creation</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Content Strategy</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Brand Identity</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Growth Analytics</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-phone text-cyan-400"></i>
+                            <span>+91 6281256601</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fab fa-whatsapp text-cyan-400"></i>
+                            <a href="https://wa.link/tbnqwd" class="hover:text-cyan-400 transition-colors">WhatsApp</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 Xconsult. All rights reserved. Designed for growth.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <a href="https://wa.link/tbnqwd"
+            class="w-14 h-14 bg-cyan-500 rounded-full flex items-center justify-center shadow-2xl hover:bg-cyan-600 transition-all animate-pulse-slow glow-blue">
+            <i class="fab fa-whatsapp text-white text-2xl"></i>
+        </a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
