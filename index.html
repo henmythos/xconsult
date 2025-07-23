@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xconsult - Grow Your Brand Without Ads</title>
+    <title>Xconsult - Grow Your Brand With Expertised Ads</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://i.ibb.co">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
@@ -87,17 +88,27 @@
             height: 400px;
         }
 
+        img {
+            transition: opacity 0.3s ease;
+        }
+        
+        img[loading="lazy"] {
+            opacity: 0;
+        }
+        
+        img[loading="lazy"].loaded {
+            opacity: 1;
+        }
+
         .animate-float {
             animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
-
             0%,
             100% {
                 transform: translateY(0px);
             }
-
             50% {
                 transform: translateY(-20px);
             }
@@ -108,12 +119,10 @@
         }
 
         @keyframes pulse-slow {
-
             0%,
             100% {
                 opacity: 1;
             }
-
             50% {
                 opacity: 0.8;
             }
@@ -228,6 +237,40 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* New styles for the team section */
+        .team-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card {
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(0, 212, 255, 0.2);
+        }
+
+        .meta-badge {
+            background: linear-gradient(135deg, #1877F2, #25D366);
+            color: white;
+            font-weight: bold;
+        }
+
+        .image-scroll-container {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .image-scroll-item {
+            scroll-snap-align: start;
+            flex: 0 0 auto;
+        }
+
         @media (max-width: 768px) {
             .section-padding {
                 padding: 40px 0;
@@ -306,7 +349,7 @@
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto">
                     We transform businesses into viral sensations through strategic content creation.
-                    No paid ads, just authentic growth that converts.
+                    We love ads, A growth Plan that converts.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
@@ -431,6 +474,54 @@
                     <a href="#contact" class="btn-primary text-white font-semibold py-2 px-6 rounded-full text-sm">
                         Join Now
                     </a>
+                </div>
+            </div>
+
+            <!-- Team Experience That Matters Section -->
+            <div class="team-section mb-16 fade-in">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold mb-4 gradient-text">Team Experience That Matters</h3>
+                    <p class="text-lg text-gray-400">Official Meta Partners - Bringing you the latest in social media innovation</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <!-- Team Card -->
+                    <div class="team-card p-8 rounded-2xl">
+                        <div class="flex flex-col md:flex-row items-center gap-6">
+                            <div class="w-full md:w-1/2">
+                                <img src="https://bestofhyderabad.com/wp-content/uploads/2025/07/Untitled-design-300x300.png" alt="Xconsult Team" class="w-full h-auto rounded-xl object-cover shadow-lg" loading="lazy" width="600" height="400">
+                            </div>
+                            <div class="w-full md:w-1/2">
+                                <div class="meta-badge inline-block px-3 py-1 rounded-full text-xs mb-4">
+                                    Official Meta Partners
+                                </div>
+                                <h4 class="text-2xl font-bold mb-4">Meet Our Expert Team</h4>
+                                <p class="text-gray-300 mb-4">
+                                    Our team consists of certified Meta professionals with years of experience in creating viral content strategies that drive real business results.
+                                </p>
+                                <ul class="text-sm text-gray-400 space-y-2 mb-6">
+                                    <li class="flex items-center"><i class="fas fa-check text-cyan-400 mr-2"></i>Meta Certified Professionals</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-cyan-400 mr-2"></i>5+ Years Industry Experience</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-cyan-400 mr-2"></i>500+ Viral Campaigns Managed</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Meta Events Gallery -->
+                    <div class="team-card p-8 rounded-2xl">
+                        <h4 class="text-2xl font-bold mb-6 text-center">Featured at Meta Events</h4>
+                        <div class="image-scroll-container flex overflow-x-auto gap-4 pb-4 -mx-2 px-2">
+                            <div class="image-scroll-item min-w-[80%] md:min-w-[45%]">
+                                <img src="https://bestofhyderabad.com/wp-content/uploads/2025/07/Untitled-design-1.png" alt="Xconsult team at Meta Business Summit 2023" class="w-full h-64 rounded-xl object-cover shadow-lg" loading="lazy" width="800" height="450">
+                                <p class="text-center text-gray-400 mt-2">Meta Business Summit 2025</p>
+                            </div>
+                            <div class="image-scroll-item min-w-[80%] md:min-w-[45%]">
+                                <img src="https://bestofhyderabad.com/wp-content/uploads/2025/07/Untitled-design-2.png" alt="Xconsult team at Meta Creator Day 2024" class="w-full h-64 rounded-xl object-cover shadow-lg" loading="lazy" width="800" height="450">
+                                <p class="text-center text-gray-400 mt-2">Meta Creator Day 2025</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1072,7 +1163,106 @@
         </a>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Intersection Observer for fade-in animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeElements.forEach(element => {
+            fadeObserver.observe(element);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // Custom cursor effect
+        const cursor = document.createElement('div');
+        cursor.className = 'cursor';
+        document.body.appendChild(cursor);
+
+        const cursorLight = document.createElement('div');
+        cursorLight.className = 'cursor-light';
+        document.body.appendChild(cursorLight);
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorLight.style.left = e.clientX + 'px';
+            cursorLight.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.classList.add('active');
+            cursorLight.classList.add('active');
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.classList.remove('active');
+            cursorLight.classList.remove('active');
+        });
+
+        // Image loading handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+            
+            lazyImages.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                    });
+                }
+            });
+        });
+
+        // Add active class to links when hovered
+        const links = document.querySelectorAll('a, button');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 
 </html>
